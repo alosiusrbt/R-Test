@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Esse App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <link rel="stylesheet" href="App/themes/CSS/lib/ui-grid.min.css" />
+    <link rel="stylesheet" href="App/themes/CSS/lib/bootstrap.css" />
+    <link rel="stylesheet" href="App/themes/CSS/lib/bootstrap-switch.css" />
+    <link rel="stylesheet" href="App/themes/CSS/easy-sidebar.css" />
+    <link href="App/themes/CSS/lib/angular-ranges-slider.css" rel="stylesheet">
+    <link rel="stylesheet" href="App/themes/CSS/lib/sticky-footer-navbar.css" type="text/css">
+    <link rel="stylesheet" href="App/themes/CSS/custom.css" type="text/css">
+    
+    <link rel="shortcut icon" type="image/png" href="App/images/Icons/favicon_64_x_64.png"/>
+	
+    
+    
+     
+
+</head>
+<body>
+    <div ng-controller="IndexController as indController" ng-cloak>
+        <div class="row navbar-header-row">
+            <div class="row index-header">
+                <div class="col-xs-2 col-sm-4 col-md-4 col-lg-4">
+                    <div class="navbar-toggle">
+                        <div class="navbar-header">
+                            <button type="button" class="easy-sidebar-toggle" data-toggle="collapse">
+                                <img ng-src="{{indController.imgHamburger}}" alt="Toggle navigation" />
+                            </button>
+                            <a href="#/">
+                                <!--This is for desktop and tablet layouts of all screens except login screen-->
+                                <img ng-src="{{indController.imgIRLogo}}" ng-click="indController.showHeader('')" alt="Nav Button" class="irlogo hidden-xs" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 text-center">
+                    <!--This link is visible for only mobile.since layout is different-->
+                    <a href="#/" class="visible-xs">
+                        <img ng-src="{{indController.imgIRLogo}}" ng-click="indController.showHeader('')" alt="Nav Button" class="irlogo" />
+                        <br />
+                    </a>
+                    <span class="page-title">{{title | translate}}</span>
+                </div>
+                <div class="col-xs-2 col-sm-4 col-md-4 col-lg-4">
+                    <!--This is visible for desktop and tablet devices-->
+                    <div class="visible-md visible-sm visible-lg login-right">
+                        <button class=" btn-default-login padding-none" id="welcome" data-toggle="dropdown" ng-click="indController.showLoginStatus()">
+                            {{indController.userStatus | translate}}				
+							<img ng-src="{{indController.imgDropDown}}" class="login-dropdown-arrow-img" />
+                        </button>
+                        <ul class="dropdown-menu-login" role="menu" aria-labelledby="welcome">
+                            <li role="presentation"><a href="#/Login" ng-click="indController.btnLogOut()" ng-click="indController.">{{indController.loginStatus | translate}} </a></li>
+                        </ul>
+                    </div>
+                    <!--This is visible for only mobile-->
+                    <div class="visible-xs">
+                        <button class="btn-default-login" id="welcome" data-toggle="dropdown" ng-click="indController.showLoginStatus()">
+                            <img ng-src="{{indController.imgPerson}}" class="login-dropdown-arrow-img" alt="person" />
+                            <img ng-src="{{indController.imgDropDown}}" class="login-dropdown-arrow-img" alt="drop down" />
+                        </button>
+                        <ul class="dropdown-menu-login" role="menu" aria-labelledby="welcome">
+                            <li role="presentation" ><a href="#/Login" ng-click="indController.btnLogOut()">{{indController.loginStatus | translate}}</a></li>
+                            
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row index-header-login">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                    <a href="#/">
+                        <!--This is for desktop and tablet layouts of login screen-->
+                        <img ng-src="{{indController.imgIRLogo}}" ng-click="indController.showHeader('')" alt="Nav Button" class="irlogo hidden-xs" />
+                        <!--This is header of mobile devices of Login screen-->
+                        <a href="#/" class="visible-xs">
+                            <img ng-src="{{indController.imgIRLogo}}" ng-click="indController.showHeader('')" alt="Nav Button" class="irlogo" />
+                            <br />
+                        </a>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar easy-sidebar">
+            <div class="menu-head">
+                <ul class="list-unstyled main-menu" ng-repeat="var_menu in indController.aMenuData">
+                    <li class="dropdown">
+                        <div ng-switch="var_menu.subMenus[0].sub_menu">
+                            <div ng-switch-when="null" class="L0">
+                                <label class="navbar-collapse-btn" data-target=".{{var_menu.mainMenu.menu_link}}" id="nav-main">
+                                    <a href="#/{{var_menu.mainMenu.menu_link}}" onclick="closenav()" ng-click="indController.showHeader(var_menu.mainMenu.menu_link)" id="main_link">{{var_menu.mainMenu.menu_name | translate }}</a>
+                                </label>
+                            </div>
+                            <div ng-switch-default>
+                                <label class="navbar-collapse-btn L1" data-toggle="collapse" data-target=".{{var_menu.mainMenu}}" id="nav-main">
+                                    {{var_menu.mainMenu | translate }}
+									<b class="menu-caret"></b>
+                                </label>
+                                <div ng-repeat="var_submenu in var_menu.subMenus" class="L2">
+                                    <div class="{{var_menu.mainMenu}} collapse" ng-if="var_submenu.sec_menu==undefined" id="sec_head">
+                                        <a href="#/{{var_submenu.sub_menu_link}}" class="list-group-item" onclick="closenav()" ng-click="indController.showHeader(var_submenu.sub_menu_header)" id="sub_menu_links">{{var_submenu.sub_menu_title | translate }} </a>
+                                    </div>
+                                    <div class="{{var_menu.mainMenu}} collapse" ng-if="var_submenu.sec_menu!=undefined" id="main">
+                                        <ul class="list-unstyled main-menu" id="sec_head">
+                                            <li class="dropdown">
+                                                <label class="navbar-collapse-btn" data-toggle="collapse" data-target=".{{var_submenu.sub_menu_title}}" id="nav-mainlabel">
+                                                    {{var_submenu.sub_menu_title}}
+												<b class="menu-caret"></b>
+                                                </label>
+                                                <div ng-repeat="var_secmenu in var_submenu.sec_menu" class="{{var_submenu.sub_menu_title}} collapse L3">
+                                                    <a href="#/{{var_secmenu.sec_menu_link}}" class="list-group-item" onclick="closenav()" ng-click="indController.showHeader(var_secmenu.sec_menu_title)" id="sec_menu_link">{{var_secmenu.sec_menu_title}}</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="row container-view">
+            <div ng-view class="container-inner-view "></div>
+        </div>
+        <!--Footer-->
+        <footer class="row footer">
+            <div class="foo-container">
+                <p class="text-muted footer-txt">{{'COMMON.INDEX.FOOTER' | translate}}.</p>
+            </div>
+        </footer>
+    </div>
+<script type="text/javascript" src="App/themes/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="App/js/Config/config.js"></script>
+    <script type="text/javascript" src="App/themes/js/bootstrap-switch.js"></script>
+    <script type="text/javascript" src="App/themes/js/bootstrap.js"></script>
+    <script type="text/javascript" src="App/themes/js/jstree.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="App/js/lib/Class.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-ui-grid/ui-grid.js"></script>
+    <script src="bower_components/pouchdb/dist/pouchdb.min.js"></script>
+    <!-- <script src="bower_components/socket.io-client/socket.io.0.9.16.js"></script> -->
+    <script src="bower_components/socket.io-client/socket.io-1.3.5.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+
+    <!-- Added for mutli selection of existing configs -->
+    <script src="bower_components/lodash.min.js"></script>
+    <script src="bower_components/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angularjs-dropdown-multiselect.js"></script>
+    <!-- Load all the routes -->
+    <!-- dom4.js is used for cross browser compatibility of methods like remove(),before(),after() -->
+    <script src="App/js/WebUI/index/MenuController.js"></script>
+    <script src="bower_components/dom4-master/build/dom4.js"></script>
+    <script src="bower_components/stacktrace/stacktrace.min.js"></script>
+    <script src="bower_components/angular-pouchdb/angular-pouchdb.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="bower_components/restangular/dist/restangular.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="App/js/main.js"></script>
+    <script src="App/js/app.js"></script>
+    <script src="App/js/LanguageLoader.js"></script>
+    <script src="App/js/lib/angular-range-slider.js"></script>
+    <script src="App/js/Services/Exception.js"></script>
+    <script src="App/js/Services/Cycle-Result/CycleResultService.js"></script>
+    <script src="App/js/WebUI/CycleLog/CycleLogController.js"></script>
+    <script src="App/js/WebUI/CycleLog/CustomizationCntrl.js"></script>
+    <script src="App/js/WebUI/CycleLog/CycleLogDirective.js"></script>
+    <script src="App/js/Services/ProcessListConfigList.js"></script>
+    <script src="App/js/Directives/PopUpDirective.js"></script>
+    <script src="App/js/WebUI/CycleLog/TraceGraphController.js"></script>
+    <script src="App/js/Services/Cycle-Result/EORDataFilter.js"></script>
+    <script src="App/js/WebUI/CycleLog/FilterDirective.js"></script>
+    
+    <script src="App/js/WebUI/Diagnostics/SystemDiagnostics/SystemDiagController.js"></script>
+    <script src="App/js/WebUI/Diagnostics/DiagnosticsService.js"></script>
+    
+    
+    <script src="App/js/Services/EsseContextService.js"></script>
+    <script src="App/js/PaginationComponent/pagination.js"></script>
+    <script src="App/js/WebUI/Audit/AuditLogController.js"></script>
+    <script src="App/js/WebUI/Event/EventLogController.js"></script>
+    <script src="App/js/Services/Language.js"></script>
+    <script src="App/js/Directives/Language.js"></script>
+    <script src="App/js/WebUI/Settings/General/SystemInitController.js"></script>
+    <script src="App/js/WebUI/Settings/Protocols/FordOpenController.js"></script>
+    <script src="App/js/WebUI/Settings/General/EmailSettingController.js"></script>
+    <script src="App/js/WebUI/Logs/LogController.js"></script>
+    <script src="App/js/WebUI/Settings/EOR/EORDataOutController.js"></script>
+    <script src="App/js/WebUI/Settings/EOR/EORNissanController.js"></script>
+    <script src="App/js/WebUI/Settings/Barcode/BarcodeController.js"></script>
+    <script src="App/js/WebUI/Settings/Barcode/BarcodeDirective.js"></script>
+    <script src="App/js/WebUI/Settings/General/DateTimeSettingsController.js"></script>
+    <script src="App/js/WebUI/Settings/General/SpindleController.js"></script>
+    <script src="App/js/WebUI/Settings/Protocols/PowerFordOpenProtocolController.js"></script>
+    <script src="App/js/WebUI/Settings/SettingsService/SettingsService.js"></script>
+    <script src="App/js/WebUI/Settings/EOR/EORDataOutDirective.js"></script>
+    <script src="App/js/WebUI/Settings/General/IPSettingsController.js"></script>
+    <script src="App/js/DataAccess/DataAccessAdaptor.js"></script>
+    <script src="App/js/DataAccess/DbClientWrapperService.js"></script>
+    <script src="App/js/DataAccess/RestClientWrapperService.js"></script>
+    <script src="App/js/DataAccess/SocketIOProvider.js"></script>
+    <script src="App/js/WebUI/Security/UserController.js"></script>
+    <script src="App/js/WebUI/Security/UserSettingsController.js"></script>
+    <script src="App/js/WebUI/Security/ShowUserSettingsController.js"></script>
+    <script src="App/js/WebUI/Security/LoginController.js"></script>
+    <script src="App/js/WebUI/index/IndexController.js"></script>
+    <script src="App/js/WebUI/Home/homeService.js"></script>
+    <script src="App/js/WebUI/Home/homeController.js"></script>
+    <!-- <script src="App/js/WebUI/Home/TestController.js"></script> -->
+    <script src="App/js/WebUI/Home/HomeRestService.js"></script>
+    <script src="bower_components/dygraphs-master/dygraph-dev.js"></script>
+    <script src="App/js/WebUI/Process/ProcessService.js"></script>
+    <script src="App/js/WebUI/Process/StepsDefaults.js"></script>
+    <script src="App/js/WebUI/Process/CreateProcessController.js"></script>
+    <script src="App/js/WebUI/Process/ProcessConfigStepDirective.js"></script>
+    <script src="App/js/WebUI/Process/EditPopUpDirective.js"></script>
+    <script src="App/js/WebUI/Process/RuleService.js"></script>
+    <script src="App/js/WebUI/Process/GlobalSettingsController.js"></script>
+    <script src="App/js/WebUI/Process/EORController.js"></script>
+    <script src="App/js/WebUI/ProcessLog/ProcessLogController.js"></script>
+    <script src="App/js/WebUI/ProcessLog/WithAjaxCtrl.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/TabstestController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/SliderTestController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/TimePickerService.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/TypeaheadTestController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/TimepickerTestController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/AlertController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/AccordionController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/CustomCheckboxController.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/ModalPopup.js"></script>
+    <script src="App/js/WebUI/Bootstrap-Components/DatepickerController.js"></script>
+    <script src="App/js/WebUI/Diagnostics/ToolDiagnostics/ToolInfoController.js"></script>    
+    <script src="App/js/WebUI/Diagnostics/ToolDiagnostics/ToolDiagnosticsController.js"></script>
+	  <script src="App/js/WebUI/About/AboutController.js"></script>
+    <!-- This is the bootstrap js, need to be loaded at last. -->
+    <script src="App/js/esseBootstrap.js"></script>
+</body>
+</html>

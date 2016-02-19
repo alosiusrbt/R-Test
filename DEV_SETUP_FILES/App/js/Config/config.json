@@ -1,0 +1,6 @@
+{
+    "env": "dev",
+    "dbUrl" : "http://10.200.82.48",
+    "restUrl" : "http://10.200.82.48",
+    "socketIOUrl" : "http://10.200.82.48/home"
+}
